@@ -1,0 +1,18 @@
+    <div id="team_new">
+	<h3>Please fill out the form:</h3>
+	<div id='error_block' style="color:#FF0000;">
+		<% @team.errors.each do |f, e| %>
+			<%=f.capitalize %>:	<%= e %><br />
+		<% end %>
+	</div>
+	<%= form_tag :action => 'create' %>
+	  <table id="team_create_table">
+	    <tr><td><label for='team_name'><strong>Name</strong></label>:</td><td><%= text_field 'team', 'name' %></td></tr>
+  	    <% if isUserAdmin %>
+	      <tr><td><label for='team_owner_id'><strong>Owner</strong></label>:</td><td><%= collection_select(:team, :owner_id, @managers, :id, :username) %></td></tr>
+	    <% end %> 
+	  </table>
+	 <%= submit_tag 'Create' %>
+	<%= form_tag %>
+	<%= link_to 'Back', session[:return_to] %>
+    </div>

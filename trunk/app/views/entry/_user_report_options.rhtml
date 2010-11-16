@@ -1,0 +1,15 @@
+<div id="user_report_subtype_selectors" >
+	  <div id="user_report_date_selectors" style="display:none">
+                <%= select("report", "date_type", Array.new) %>
+		<%= select("report", "date_range", Array.new) %>
+                <%= select("report", "date_subtype", Array.new) %>
+	  </div>
+	  <div id="user_report_project_selectors" style="display:none">
+		<%= collection_select("report", "projects_list", Array.new, :id, :name) %>
+		<%= select("report", "project_options", Array.new) %>
+	  </div>
+	  <div id="user_report_chartered_selectors" style="display:none">
+		<!--<%= select("report", "chartered_options", Array.new) %> -->
+		<%= select("report", "chartered_range", Array.new) %>
+	  </div>
+</div>

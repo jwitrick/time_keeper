@@ -1,0 +1,29 @@
+  <div id='project_edit'>
+	<% if @project.blank? %>
+	  <p>Nothing found</p>
+	<% else %>
+	  <div id='project_data'>
+	   <h3>Please fill ouf the form: </h3>
+	   <div id='error_block' style="color:#FF0000;">
+		<% @project.errors.each do |f, e| %>
+			<%=f.capitalize %>:	<%= e %><br />
+		<% end %>
+	   </div>
+ 	   <%= form_tag :action => 'update', :id => @project.id %>
+	  	<table id='project_table' >
+	   	  <tr><td><label for='project_name'><strong>Name</strong></label>:</td><td><%= text_field 'project', 'name' %></td></tr>
+	    	  <% if isUserAdmin %>
+		    <tr><td><label for='project_owner_id' ><strong>Owner</strong></label>:</td><td><%= collection_select(:project, :owner_id, getManagers, :id, :username) %></td></tr>
+		    <tr><td><label for='project_team_id' ><strong>Team</strong></label>:</td><td><%= collection_select(:project, :team_id, getAllTeams, :id, :name) %></td></tr>
+	         <% else %>
+	   	    <tr><td><label for='project_team_id' ><strong>Team</strong></label>:</td><td><%= collection_select(:project, :team_id, @teams, :id, :name) %></td></tr>
+	         <% end %>
+		    <tr><td><label for='project_chartered'><strong>Chartered</strong></label>:</td><td><%= select(:project, :chartered, getCharteredArray) %></td></tr>
+		    <tr><td><label for='project_description'><strong>Description</strong></label>:</td></tr><tr><td></td><td><%= text_area 'project', 'description', {:size=>"60x10"} %></td></tr>
+	  	</table>
+		<%= submit_tag "Save" %>
+	<%= form_tag %>
+	<%= link_to 'Back', session[:return_to] %>	
+	  </div>
+	<% end %>
+  </div>

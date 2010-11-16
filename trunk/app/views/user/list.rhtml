@@ -1,0 +1,46 @@
+    <div id='user_list'>
+	<h2>Users</h2>
+	<% if @users.blank? %>
+		<p>No Users...Should never be displayed</p>
+	<% else %>
+	   <table id='users_data' border=1>
+		<tr>
+		  <th>UserName:</th>
+		  <th>Email:</th>
+		  <th>First Name:</th>
+		  <th>Last Name:</th>
+		  <th>Team:</th>
+		 <% if isUserAdmin %>
+			<th>Actions:</th>
+		 <% end %>
+		</tr>
+	      <% @users.each do |u| %>
+		<tr>
+		 <% if hasPermissionToEditUser(session[:user_id], u.id) %>
+		  <td><%= link_to u.username, {:action => 'edit', :controller => 'user', :id => u.id} %></td>
+		 <% else %>
+		  <td><%= u.username %></td>
+		 <% end %>
+		  <td><%= u.email %></td>
+		  <td><%= u.first_name %></td>
+		  <td><%= u.last_name %></td>
+		  <td><%= link_to getTeamNameById(u.team_id), {:action => 'show', :controller => 'team', :id => u.team_id} %></td>
+		 <% if isUserAdmin %>
+		    <% if u.isAdmin and u.active and u.id != session[:user_id]%>
+		       <td><%= link_to 'Remove Admin', {:action => 'remove_admin', :controller => 'user', :id => u.id}%></td>
+		    <% elsif !u.isAdmin and u.active %>
+		       <td><%= link_to 'Make Admin', {:action => 'make_admin', :controller => 'user', :id => u.id}%>, 
+				<%= link_to 'Disable', {:action => 'disable', :controller => 'user', :id => u.id}%></td>
+		    <% elsif !u.active %>
+		       <td><%= link_to 'Enable', {:action => 'enable', :controller => 'user', :id => u.id} %></td>
+		    <% else %>
+		       <td></td>
+		    <% end %>
+		 <% end %>
+		</tr>
+	      <% end %>
+	   </table>
+	<% end %>
+	<br />
+	<%= link_to 'Add New User', {:action => 'new', :controller => 'user'} %>
+    </div>

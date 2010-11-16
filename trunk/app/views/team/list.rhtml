@@ -1,0 +1,20 @@
+    <div id='team_list'>
+	<% if @teams.blank? %>
+	  <p>No Teams.</p>
+	<% else %>
+	  <h3>Teams: </h3>
+	  <table id='teams_view' border=1>
+		<tr>
+		  <th>Team Name:</th>
+		  <th>Tean Owner:</th>
+		</tr>
+	     <% @teams.each do |t| %>
+		<tr>
+		  <td><%= link_to t.name, {:action => 'show', :id => t.id} %></td>
+		  <td><%= getUserNameById(t.owner_id) %></td>
+		</tr>
+	     <% end %>
+	  </table>
+	<% end %>
+	<%= link_to "Add New Team", {:action => 'new', :controller => 'team'}%>
+    </div>

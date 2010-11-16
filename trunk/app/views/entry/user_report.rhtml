@@ -1,0 +1,148 @@
+<div id="user_report">
+  <div id="report_type_selector">
+	<%= select("report", "report_type", @userReportOptions) %>
+  </div>
+  <div id="user_report_subtype">
+	<%= render :partial => 'user_report_options' %>
+  </div>
+  <div id="user_report_results">
+	<%= render :partial => 'user_report_results' %>
+  </div>
+  <script type="text/javascript">
+	function displayReportDate(data){
+		
+	}
+	function makeDivVisible(div_name){
+		$("div#"+div_name).removeAttr('style');
+	}
+	function makeDivHidden(div_name){
+		$("div#"+div_name).attr('style', 'display:none');
+	}
+	function addDataToSelect(data, select_element, sel_value){
+		$.each(data, function(d, t){
+			if (sel_value == t) {
+			  row = "<option value=\"" + t + "\" SELECTED>" + t + "</option>";
+			}		
+			else{
+			  row = "<option value=\"" + t + "\">" + t + "</option>";
+			}
+			  $(row).appendTo("select#"+select_element);
+		});
+	}
+	function setDateOptions(data){
+		$.each(data.entries, function(d, t){
+			$.each(t, function(i, j){
+				alert(j.name);
+			});
+		});
+		$("select#report_date_type option").remove();
+		var date_type = data.dateoptions;
+		addDataToSelect(date_type, "report_date_type", data.dateoptions_sel);
+		$("select#report_date_range option").remove();
+		var date_range = data.daterange;
+		addDataToSelect(date_range, "report_date_range", data.daterange_sel);
+		$("select#report_date_subtype option").remove();
+		var date_suboptions = data.datesuboptions;
+		addDataToSelect(date_suboptions, "report_date_subtype", data.datesubtype_sel);
+		makeDivHidden("user_report_project_selectors");
+		makeDivVisible("user_report_date_selectors");
+		makeDivHidden("user_report_chartered_selectors");
+	}
+	function setProjectOptions(data){
+		$("select#report_projects_list option").remove();
+                var projects_list = data.projects;
+		$.each(projects_list, function(i, j){
+			$.each(j, function(d, t){
+			  if (data.project == t.id){
+                            row = "<option value=\"" + t.id + "\" SELECTED>" + t.name + "</option>";
+			  }else{
+                            row = "<option value=\"" + t.id + "\">" + t.name + "</option>";
+			  }
+                          $(row).appendTo("select#report_projects_list");
+                	});
+		});
+                row = "<option value=\"All\">All</option>";
+                $(row).appendTo("select#report_projects_list");                                       
+                $("select#report_project_options option").remove();
+                var project_options = data.project_options; 
+		addDataToSelect(project_options, "report_project_options", data.project_opt);
+                makeDivVisible("user_report_project_selectors");
+		makeDivHidden("user_report_date_selectors");
+                makeDivHidden("user_report_chartered_selectors");
+	}
+	function setCharteredOptions(data){
+		$("select#report_chartered_range option").remove();
+		var range = data.range;
+		addDataToSelect(range, "report_chartered_range", data.range_sel);
+		makeDivVisible("user_report_chartered_selectors");
+		makeDivHidden("user_report_date_selectors");
+		makeDivHidden("user_report_project_selectors");
+	}
+	function setNonCharteredOptions(data){
+		$("select#report_chartered_range option").remove();
+		var range = data.range;
+		addDataToSelect(range, "report_chartered_range", data.range_sel);
+		makeDivVisible("user_report_chartered_selectors");
+		makeDivHidden("user_report_date_selectors");
+		makeDivHidden("user_report_project_selectors");
+	}
+	function loadSelectorData(report_value, report_string){
+		var id_value_string = report_value;
+		$.ajax({
+		  dataType: "json",
+		  cache: false,
+		  url: '/entry/user_report_suboptions/',
+		  data: "id=" + id_value_string + report_string,
+		  timeout: 2000,
+		  success: function(data){
+			if(id_value_string == 'Date'){
+				setDateOptions(data);
+			}
+			if(id_value_string == 'Project'){
+				setProjectOptions(data);
+                        }
+                        if(id_value_string == 'Chartered'){
+				setCharteredOptions(data);
+			}
+			if(id_value_string == 'NonChartered'){
+				setNonCharteredOptions(data);
+			}
+		    } //end success
+		}); //end ajax			
+	}
+	function loadInitialOptions(value){
+		loadSelectorData(value, "&change=date_type");
+	}
+	$(document).ready(function(){
+		$("select#report_report_type").change(function(){
+			loadSelectorData($(this).val(), "");
+		});
+		var report_type = $("select#report_report_type").val();
+		$("select#report_date_type").change(function(){
+			var subOptions = "&change=date_type&date_type="+$(this).val().replace(/ /g, "_") + "&date_range=nil&date_subtype="+$("select#report_date_subtype").val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		$("select#report_date_range").change(function(){
+			var subOptions = "&change=date_range&date_range="+$(this).val().replace(/ /g, "_") + "&date_type=" + $("select#report_date_type").val().replace(/ /g, "_")+ "&date_subtype="+$("select#report_date_subtype").val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		$("select#report_date_subtype").change(function(){
+			var subOptions = "&change=date_subtype&date_subtype="+$(this).val().replace(/ /g, "_") + "&date_type=" + $("select#report_date_type").val().replace(/ /g, "_")+ "&date_range="+$("select#report_date_range").val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		$("select#report_projects_list").change(function(){
+			var subOptions ="&project="+$(this).val().replace(/ /g, "_") + "&project_option="+$("select#report_project_options").val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		$("select#report_project_options").change(function(){
+			var subOptions ="&project_option="+$(this).val().replace(/ /g, "_") + "&project="+$("select#report_projects_list").val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		$("select#report_chartered_range").change(function(){
+			var subOptions ="&chartered_range="+$(this).val().replace(/ /g, "_");
+			loadSelectorData(report_type, subOptions);
+		});
+		loadInitialOptions('Date');
+	});//end ready(function)
+  </script>
+</div>

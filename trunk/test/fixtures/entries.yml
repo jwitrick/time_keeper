@@ -1,0 +1,44 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+entry1:
+ id: 1
+ name: "entry 1"
+ duration: 4.3
+ description: "added this test entry"
+ project_id: 1
+ user_id: 1
+ work_type: Testing
+ date: "2010-10-25 17:27:42"
+
+entry2:
+ id: 2
+ name: "entry 2"
+ duration: 1.0
+ description: "this is a bug fix entry"
+ project_id: 2
+ user_id: 3
+ work_type: "Bug Fix"
+ date: "2010-09-02 12:31:15"
+
+entry3:
+ id: 3
+ name: "entry 3"
+ duration: "this is a developemnt entry"
+ project_id: 1
+ user_id: 3
+ work_type: "Bug Fix"
+ date: "2010-10-15 15:31:55"
+
+entry4:
+ id: 4
+ name: "entry 4"
+ duration: "this is a developemnt entry"
+ project_id: 1
+ user_id: 1
+ work_type: "Bug Fix"
+ date: "2010-11-05 15:31:55"

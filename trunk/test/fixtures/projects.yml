@@ -1,0 +1,32 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+
+project1:
+ id: 1
+ name: project1
+ description: "create app for project 1"
+ owner_id: 2
+ chartered: 0
+ team_id: 1
+
+project2:
+ id: 2
+ name: testing
+ description: "testing projects"
+ owner_id: 3
+ chartered: 1
+ team_id: 2
+
+project3:
+ id: 3
+ name: production
+ description: "entries dealing with production"
+ owner_id: 2
+ chartered: 0
+ team_id: 4
+ active: 0

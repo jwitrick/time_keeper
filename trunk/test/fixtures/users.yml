@@ -1,0 +1,50 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+# one:
+#   column: value
+#
+# two:
+#   column: value
+admin1:
+ id: 1
+ username: admin1
+ first_name: admin
+ last_Name: 1
+ email: justin.witrick@mailtrust.com
+ password: toor
+ team_id: 1
+ isAdmin: 1
+ isManager: 1
+ active: 1
+
+manager1:
+ id: 2
+ username: manager1
+ first_name: manager
+ last_name: 1
+ email: justin.witrick@mailtrust.com
+ password: toor
+ team_id: 1
+ isManager: 1
+ active: 1
+
+manager2:
+ id: 3
+ username: manager2
+ first_name: manager
+ last_name: 2
+ email: justin.witrick@mailtrust.com
+ password: toor
+ team_id: 2
+ isManager: 1
+ active: 1
+
+basic1:
+ id: 4
+ username: basic1
+ first_name: basic
+ last_name: 1
+ email: justin.witrick@mailtrust.com
+ password: toor
+ team_id: 1
+ active: 0

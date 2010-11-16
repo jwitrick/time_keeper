@@ -1,0 +1,47 @@
+    <div id='project_list'>
+	<% if @projects.blank? %>
+	  <p>No projects.</p>
+	<% else %>
+	  <h3>Projects: </h3>
+	  <table id='projects_view' border=1>
+		<tr>
+		  <th>Project Name:</th>
+		  <th>Project Description:</th>
+		  <th>Project Chartered:</th>
+		  <th>Project Owner:</th>
+		<% if isUserAdmin %>
+		  <th>Actions:</th>
+		<% end %>
+		</tr>
+	    <% @projects.each do |p| %>
+		<tr>
+		 <% if isUserAdmin or p.owner_id == session[:user_id] or getTeamById(p.team_id).owner_id == session[:user_id]%>
+		  <td><%= link_to p.name, {:action => 'edit', :id => p.id}%></td>
+		 <% else %>
+		  <td><%= p.name%></td>
+		 <% end %>
+		  <td><%= p.description%></td>
+		  <td>
+			<% if p.chartered %>
+				Yes
+			<% else %>
+				No
+			<% end %>
+		  </td>
+		  <td><%= getUserNameById(p.owner_id)%></td>
+		<% if isUserAdmin %>
+		  <td>
+			<% if p.active %>
+				<%= link_to 'Disable', {:action => 'disable', :id => p.id}%>
+			<% else %>
+				<%= link_to 'Enable', {:action => 'enable', :id => p.id}%>
+			<% end %>
+		  </td>
+		<% end %>
+		</tr>
+	    <% end %>
+ 	  </table>	
+	<% end %>
+	<br />
+	<%= link_to 'Create New Project', {:action => 'new'} %>	
+    </div>

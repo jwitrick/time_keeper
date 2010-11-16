@@ -1,0 +1,20 @@
+	<div id="create_entry">
+		<h3>Please fill out the Form:</h3>
+		<div id='error_block' style="color:#FF0000;">
+		  <% @entry.errors.each do |f, e| %>
+			<%=f.capitalize %>:	<%= e %><br />
+		  <% end %>
+		</div>
+		<%= form_tag :action => 'create' %>
+		   <table id="entry_create_table">
+			  <tr><td><label for="entry_name">Entry</label>:</td><td><%= text_field 'entry', 'name' %></td></tr>
+			  <tr><td><label for="entry_duration">Duration</label>:</td><td><%= text_field 'entry', 'duration' %></td></tr>
+			  <tr><td><label for="entry_project_id">Project</label>:</td><td><%= collection_select(:entry, :project_id, @projects, :id, :name) %></td></tr>
+			  <tr><td><label for='entry_project_work_type'>Type</label>:</td><td><%= select(:entry, :work_type, getWork_type) %></td></tr>
+			  <tr><td><label for="entry_description">Description</label>:</td><tr>
+			  <tr><td></td><td><%= text_area 'entry', 'description' %></td><tr>
+		   </table>
+		   <%= submit_tag "Create" %>
+		<%= form_tag %>
+		<%= link_to 'Back', session[:return_to] %>
+	</div>

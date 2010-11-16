@@ -1,0 +1,63 @@
+  <div id="entry_index">
+<% if @entries_current.blank? %>
+	<p>No entries for today.</p>
+<% else %>
+	  <h3>Entries for Today: <%= getCurrentDate%></h3>
+	<table id="entries_current" border=1>
+	  <tr>
+		<th>Name:</th>
+		<th>Duration:</th>
+		<th>Project:</th>
+		<th>Type:</th>
+		<th>Date:</th>
+		<% if isUserAdmin %>
+			<th>Actions:</th>	
+		<% end %>
+	  </tr>
+	  <% @entries_current.each do |e| %>
+		<tr>
+		  <td><%= link_to e.name, {:action => 'show', :id => e.id} %></td>
+		  <td><%= e.duration %> Hour(s)</td>
+			<% @time_current = @time_current + e.duration%>
+		  <td><%= getProjectName(e.project_id) %></td>
+		  <td><%= e.work_type %></td>
+		  <td><%= getOnlyDate(e.date) %></td>
+		  <% if isUserAdmin %>
+			<td><%= link_to "Delete", {:action => 'delete', :id => e.id}, :confirm => "Are you sure you want to delete this item?" %></td>
+		  <% end %>
+		</tr>
+	  <% end %>
+	</table>
+	<p>Total hours worked today: <%= @time_current %> Hour(s)</p>
+<% end %>
+	<%= link_to 'Add new Entry', {:action => 'new'} %> 
+<% if @entries_past.blank? %>
+	<p>No entries for Yesterday.</p>
+<% else %>
+	  <h3>Entries for Yesterday: <%= getYesterdaysDate%></h3>
+	<table id="entries_past" border=1>
+	  <tr>
+		<th>Name:</th>
+		<th>Duration:</th>
+		<th>Project:</th>
+		<th>Date:</th>
+		<% if isUserAdmin %>
+			<th>Actions:</th>	
+		<% end %>
+	  </tr>
+	  <% @entries_past.each do |e| %>
+		<tr>
+		  <td><%= link_to e.name, {:action => 'show', :id => e.id} %></td>
+		  <td><%= e.duration %> Hour(s)</td>
+			<% @time_past = @time_past + e.duration%>
+		  <td><%= getProjectName(e.project_id) %></td>
+		  <td><%= getOnlyDate(e.date) %></td>
+		  <% if isUserAdmin %>
+			<td><%= link_to "Delete", {:action => 'delete', :id => e.id}, :confirm => "Are you sure you want to delete this item?" %></td>
+		  <% end %>
+		</tr>
+	  <% end %>
+	</table>
+	<p>Total hours worked yesterday: <%= @time_past %> Hour(s)</p>
+<% end %>
+       </div>

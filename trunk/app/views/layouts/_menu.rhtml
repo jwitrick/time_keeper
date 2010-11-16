@@ -1,0 +1,30 @@
+	<% if session[:user_id] != nil %>
+		<h3>Menu</h3>
+			<div id="user_actions">
+			  <li><%= link_to 'Home', {:action => 'index', :controller => 'entry'} %> </li>
+			  <li><%= link_to 'Add new Entry', {:action => 'new', :controller => 'entry'} %></li>
+			</div>
+			<div id="user_menu">
+			  <p>User Menu:</p>
+			  <ul>
+			    <li>Reports</li>
+			    <li><%= link_to 'User Information', {:action => 'edit', :controller => 'user', :id => session[:user_id]}%></li>
+			    <li><%= link_to 'Change Password', {:action => 'password', :controller => 'user', :id => session[:user_id]}%></li>
+			  </ul>
+			</div>
+			<% if isUserManager %>
+			  <div id='manager_menu'>
+			    <p>Manager Menu:</p>
+			    <ul>
+				<li><%= link_to 'View Projects', {:action => 'list', :controller => 'project'} %></li>
+				<li><%= link_to 'View Teams', {:action => 'list', :controller => 'team'} %></li>
+				<li><%= link_to 'View Users', {:action => 'list', :controller => 'user'} %></li>
+				<li>Manager Reports</li>
+			    </ul>
+			  </div>
+			<% end %>
+		<hr />
+		<ul>
+		   <li><%= link_to "logout",:controller => "index", :action => "logout" %> </li>
+		</ul>
+	<% end %>

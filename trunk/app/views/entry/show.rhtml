@@ -1,0 +1,18 @@
+	<div id="show_entry">
+		<% if @entry.blank? %>
+			<p>Nothing found</p>
+		<% else %>
+		  <% @entry.each do |e| %>
+			<h3>Entry Details:</h3>
+		 	 <table id="entrie_show" border=1>
+				<tr><td><strong>Name: </strong></td> <td><%= e.name %></td></tr>
+				<tr><td><strong>Duration: </strong></td> <td><%= e.duration %></td></tr>
+				<tr><td><strong>Project: </strong></td> <td><%= getProjectName(e.project_id) %></td></tr>
+				<tr><td><strong>Type: </strong></td> <td><%= e.work_type %></td></tr>
+				<tr><td><strong>Description: </strong></td> <td><%= e.description %></td></tr>
+		 	</table>
+			<%= link_to "Edit", {:action => 'edit', :id => e.id} %><br /> <br />
+		  <% end %>
+		<% end %>
+		<%= link_to 'Back to Index', {:action => 'index'} %>
+	</div>

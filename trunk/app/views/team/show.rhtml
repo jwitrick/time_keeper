@@ -1,0 +1,36 @@
+     <div id='team_show'>
+	<h3>Team: <%=@team.name%></h3>
+	<table id="team_show_table">
+	  <tr><td><strong>Owner:</strong></td><td><%= getUserNameById(@team.owner_id) %></td></tr> 
+	  <tr><td><strong>Team Members: </strong></td></tr>
+		<tr><td></td><td padding="2">
+		<% if @team_members.blank? %>
+			<p> No members </p>
+		<% else %>
+			  <% @team_members.each do |t| %>
+				<%= t.username %><br />
+			  <% end %>
+		<% end %></td></tr>
+	  <tr></tr>
+	  <tr><td><strong>Projects: </strong></td><td>
+		<% if @projects.blank? %>
+			<p> No Projects </p>
+		<% else %>
+			  <% @projects.each do |p| %>
+				<% if isUserAdmin or session[:user_id] == p.owner_id or getCurrentUser(session[:user_id]).team_id == p.team_id %>
+				  <%= link_to p.name, {:action => 'edit', :controller => 'project', :id => p.id} %><br />
+				<% else %>
+				  <%= p.name %><br />
+				<% end %>
+			  <% end %>
+		<% end %> </td></tr>
+	  </table>
+	  <br />
+	  <% if getCurrentUser(session[:user_id]).team_id == @team.id %> 
+		<%= link_to 'Edit Team', {:action => 'edit', :controller => 'team', :id => @team.id} %>
+	  <% elsif isUserAdmin %>
+		<%= link_to 'Edit Team', {:action => 'edit', :controller => 'team', :id => @team.id} %>
+	  <% end %>
+	  <br />
+	  <%= link_to 'Back to List', {:action => 'list', :controller => 'team'} %>
+     </div>

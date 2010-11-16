@@ -1,0 +1,23 @@
+
+   <div id='user_edit'>
+	<h3>Please fill out the form:</h3>
+	<div id='error_block' style="color:#FF0000;">
+		<% @user.errors.each do |f, e| %>
+			<%=f %>:	<%= e %><br />
+		<% end %>
+	</div>
+	<%= form_tag :action => 'update', :id => @user.id %>
+	<table id="user_edit">
+	 <tr><td><label for='user_username'><strong>UserName</strong></label>:</td><td><%=text_field 'user', 'username'%></p></td></tr>
+	 <tr><td><label for='user_first_name'><strong>First Name</strong></label>:</td><td><%= text_field 'user', 'first_name' %></td></tr>
+	 <tr><td><label for='user_last_name'><strong>Last Name</strong></label>:</td><td><%= text_field 'user', 'last_name' %></td></tr>
+	 <tr><td><label for='user_email'><strong>Email</strong></label>:</td><td><%= text_field 'user', 'email' %></td></tr>
+	 <tr><td><label for='user_team'><strong>Team</strong></label>:</td><td><%= collection_select(:user, :team_id, @teams, :id, :name) %></td></tr>
+	  <% if isUserAdmin and @user.id != session[:user_id]%>
+	    <tr><td><label for='user_isManager'><strong>Manager</strong></label>:</td><td><%= check_box(:user, :isManager) %></td></tr>
+	  <% end %>
+	</table>
+	  <%= submit_tag 'Save' %>
+	<%= form_tag %>
+	<%= link_to 'Back', session[:return_to] %>
+   </div>

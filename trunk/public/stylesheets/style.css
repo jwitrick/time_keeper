@@ -1,0 +1,62 @@
+html {
+   font-family: Helvetica, Geneva, Arial, sans-serif;
+   font-size: medium;
+   font-color: #000;
+   background-color: #AFDCEC;
+}
+a:link, a:active, a:visited {
+   color: #CD0000;
+}
+input { 
+   margin-bottom: 5px;
+}
+p { 
+   line-height: 150%;
+}
+body {
+	margin: 0;
+	height: 100%;
+}
+div#header {
+   height: 50px;
+   text-align: center;
+   padding-bottom: 15px;
+}
+div#footer {
+	height: 20px;
+}
+div#main {
+	margin-top: 32px;
+}
+div#menu {
+	padding:0 25px;
+	float: left;
+	width: 175px;
+	margin-bottom: 32px;
+}
+div#content {
+	padding:0 25px 300px 35px;
+	margin-left: 200px;
+	border-left:1px solid #CCC;
+}
+.even td  {
+	padding:5px;
+	background:#EEE;
+}
+.odd td  {
+	padding:5px;
+	background:#FFF;
+}
+input  {
+	display:block;
+}
+div#user_actions {
+	font-size: .8em;
+	margin-left: 20px;
+}
+div#project_new {
+	font-size: small;
+}
+div#error_block {
+   	color: #FF0000;
+}

@@ -1,0 +1,24 @@
+<% if @entries.blank? %>
+	<p>There are no entries for the user <%session[:user_id]%></p>
+<% else %>
+	<table id="entries_current" border=1>
+	  <tr>
+		<th>Name:</th>
+		<th>Duration:</th>
+		<th>Project:</th>
+		<th>Type:</th>
+		<th>Date:</th>
+	  </tr>
+	  <% @entries.each do |e| %>
+		<tr>
+		  <td><%= link_to e.name, {:action => 'show', :id => e.id} %></td>
+		  <td><%= e.duration %> Hour(s)</td>
+			<% @totaltime = @totaltime + e.duration%>
+		  <td><%= e.work_type %>
+		  <td><%= getProjectName(e.id) %></td>
+		  <td><%= getOnlyDate(e.date) %></td>
+		</tr>
+	  <% end %>
+	</table>
+	<p>Total time: <%= @totaltime %> Hour(s)</p>
+<% end %>

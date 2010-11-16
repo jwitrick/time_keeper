@@ -1,0 +1,45 @@
+<div id="user_report">
+  <div id="report_type_selector">
+	<%= select("report", "report_type", @userReportOptions) %>
+  </div>
+  <div id="user_report_subtype">
+	<%= render :partial => 'user_report_options' %>
+  </div>
+  <div id="user_report_results">
+	<%= render :partial => 'user_report_results' %>
+  </div>
+  <%= javascript_include_tag :all %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+	$("select#report_report_type").change(function(){
+          loadSelectorData($(this).val(), "");
+        });
+        var report_type = $("select#report_report_type").val();
+        $("select#report_date_type").change(function(){
+          var subOptions = "&change=date_type&date_type="+$(this).val().replace(/ /g, "_") + "&date_range=nil&date_subtype="+$("select#report_date_subtype").val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+        $("select#report_date_range").change(function(){
+          var subOptions = "&change=date_range&date_range="+$(this).val().replace(/ /g, "_") + "&date_type=" + $("select#report_date_type").val().replace(/ /g, "_")+ "&date_subtype="+$("select#report_date_subtype").val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+        $("select#report_date_subtype").change(function(){
+          var subOptions = "&change=date_subtype&date_subtype="+$(this).val().replace(/ /g, "_") + "&date_type=" + $("select#report_date_type").val().replace(/ /g, "_")+ "&date_range="+$("select#report_date_range").val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+        $("select#report_projects_list").change(function(){
+          var subOptions ="&project="+$(this).val().replace(/ /g, "_") + "&project_option="+$("select#report_project_options").val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+        $("select#report_project_options").change(function(){
+          var subOptions ="&project_option="+$(this).val().replace(/ /g, "_") + "&project="+$("select#report_projects_list").val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+        $("select#report_chartered_range").change(function(){
+          var subOptions ="&chartered_range="+$(this).val().replace(/ /g, "_");
+          loadSelectorData(report_type, subOptions);
+        });
+		loadInitialOptions('Date');
+    });
+  </script>
+</div>

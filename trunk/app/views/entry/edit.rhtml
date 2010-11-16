@@ -1,0 +1,27 @@
+  <div id='entry_edit'>
+	<% if @entry.blank? %>
+	  <p>Nothing found</p>
+	<% else %>
+		<div id='entry_data'>
+		 <h3>Please fill out the form</h3>
+		 <div id='error_block' style="color:#FF0000;">
+		  <% @entry.errors.each do |f, e| %>
+			<%=f.capitalize %>:	<%= e %><br />
+		  <% end %>
+		 </div>
+		  <%= form_tag :action => 'update', :id => @entry.id %>
+		    <table id="entry_edit_table">
+			<tr><td><label for="entry_name">Entry</label>:</td><td><%= text_field 'entry', 'name' %></td></tr>
+			<tr><td><label for="entry_duration">Duration</label>:</td><td><%= text_field 'entry', 'duration' %></td></tr>
+			<tr><td><label for="entry_project_id">Project</label>:</td><td><%= collection_select(:entry, :project_id, @projects, :id, :name) %></td></tr>
+			<tr><td><label for="entry_work_type">Type</label>:</td><td><%= select(:entry, :work_type, getWork_type, {:selected => @workValue}) %></td></tr>
+			<tr><td><label for="entry_description">Description</label>:</td></tr>
+			<tr><td></td><td><%= text_area 'entry', 'description' %></td></tr>
+		    </table>
+		    <%= submit_tag "Save Changes" %>
+		  <%= form_tag %>
+		</div>
+	<% end %>
+	<br />
+	<%= link_to 'Back', session[:return_to]%>
+  </div>

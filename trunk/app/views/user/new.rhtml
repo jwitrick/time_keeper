@@ -1,0 +1,24 @@
+   <div id='user_new'>
+	<h3>Please fill out the form:</h3>
+	<div id='error_block' style="color:#FF0000;">
+		<% @user.errors.each do |f, e| %>
+			<%=f.capitalize %>:	<%= e %><br />
+		<% end %>
+	</div>
+	<%= form_tag :action => 'create' %>
+	 <table id="user_table">
+	  <tr><td><label for='user_username'><strong>UserName</strong></label>:</td><td><%= text_field 'user', 'username' %></td></tr>
+	  <tr><td><label for='user_first_name'><strong>First Name</strong></label>:</td><td><%= text_field 'user', 'first_name' %></td></tr>
+	  <tr><td><label for='user_last_name'><strong>Last Name</strong></label>:</td><td><%= text_field 'user', 'last_name' %></td></tr>
+	  <tr><td><label for='user_email'><strong>Email</strong></label>:</td><td><%= text_field 'user', 'email' %></td></tr>
+	  <tr><td><label for='user_password'><strong>Password</strong></label>:</td><td><%= password_field('user', 'password', {:secret => true}) %></td></tr>
+	  <tr><td><label for='user_password_confirmation'><strong>Confirm Password</strong></label>:</td><td><%= password_field('user', 'password_confirmation', {:secret => true}) %></td></tr>
+	  <tr><td><label for='user_team'><strong>Team</strong></label>:</td><td><%= collection_select(:user, :team_id, @teams, :id, :name) %></td></tr>
+	  <% if isUserAdmin %>
+	    <tr><td><label for='user_isManager'><strong>Manager</strong></label>:</td><td><%= check_box(:user, :isManager) %></td></tr>
+	  <% end %>
+	 </table>
+	  <%= submit_tag 'Create' %>
+	<%= form_tag %>
+	<%= link_to 'Back', session[:return_to] %>
+   </div>
